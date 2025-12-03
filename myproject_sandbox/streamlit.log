@@ -1,0 +1,141 @@
+============================
+Streamlit run started at: Tue Nov 25 06:30:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 06:35:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 06:40:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 06:45:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 06:50:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 06:55:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 07:00:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 07:05:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 07:10:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 07:15:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 07:20:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 07:25:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 09:25:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 09:30:01 UTC 2025
+nohup: failed to run command 'streamlit': No such file or directory
+============================
+Streamlit run started at: Tue Nov 25 09:35:01 UTC 2025
+
+Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+
+
+  You can now view your Streamlit app in your browser.
+
+  URL: http://127.0.0.1:8501
+
+============================
+Streamlit run started at: Tue Nov 25 09:40:01 UTC 2025
+
+Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+
+2025-11-25 09:40:02.157 Port 8501 is already in use
+INFO:     Will watch for changes in these directories: ['/home/ubuntu/myproject']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [3568] using StatReload
+INFO: Database connection successful.
+INFO: Table 'df_realTimeFlightDataSilverData' saved successfully.
+INFO: Table 'df_airlinesInfoSilverData' saved successfully.
+INFO: Table 'df_airportsInfoSilverData' saved successfully.
+INFO: Table 'realTimeFlightsDataGold' saved successfully.
+INFO:     Started server process [3570]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:35700 - "GET /flights HTTP/1.1" 200 OK
+============================
+Streamlit run started at: Tue Nov 25 09:45:01 UTC 2025
+
+Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+
+2025-11-25 09:45:02.296 Port 8501 is already in use
+============================
+Streamlit run started at: Tue Nov 25 10:00:01 UTC 2025
+
+Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+
+2025-11-25 10:00:01.438 Port 8501 is already in use
+INFO:     127.0.0.1:51134 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51134 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51126 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51126 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53220 - "GET /flights HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39334 - "GET /flights HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/home/ubuntu/myproject']
+ERROR:    [Errno 98] Address already in use
+INFO:     127.0.0.1:42912 - "GET /flights HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36972 - "GET /flights HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [3570]
+INFO: Database connection successful.
+INFO: Table 'df_realTimeFlightDataSilverData' saved successfully.
+INFO: Table 'df_airlinesInfoSilverData' saved successfully.
+INFO: Table 'df_airportsInfoSilverData' saved successfully.
+INFO: Table 'realTimeFlightsDataGold' saved successfully.
+INFO:     Started server process [8456]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:44308 - "GET /flights HTTP/1.1" 200 OK
+  Stopping...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [8456]
+INFO:     Stopping reloader process [3568]
+============================
+Streamlit run started at: Fri Nov 28 10:00:01 UTC 2025
+
+Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
+
+
+  You can now view your Streamlit app in your browser.
+
+  URL: http://127.0.0.1:8501
+
+============================
+Streamlit run started at: Fri Nov 28 10:50:01 UTC 2025
+/home/ubuntu/.venv/bin/python: can't open file 'uvicorn': [Errno 2] No such file or directory
+============================
+Streamlit run started at: Fri Nov 28 11:00:02 UTC 2025
+INFO:     Will watch for changes in these directories: ['/home/ubuntu/myproject']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [5830] using StatReload
+INFO: Database connection successful.
+INFO: Table 'df_realTimeFlightDataSilverData' saved successfully.
+INFO: Table 'df_airlinesInfoSilverData' saved successfully.
+INFO: Table 'df_airportsInfoSilverData' saved successfully.
+INFO: Table 'realTimeFlightsDataGold' saved successfully.
+INFO:     Started server process [5832]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55918 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55930 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55930 - "GET /openapi.json HTTP/1.1" 200 OK

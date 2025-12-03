@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:15
+    container_name: airlabs_db
+    restart: always
+    env_file:
+      - ./.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+
+  api:
+    build: ./api
+    container_name: my_api
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    ports:
+      - "8000:8000"
+    networks:
+      - mynetwork
+
+  streamlit:
+    build: ./streamlit
+    container_name: my_streamlit
+    restart: always
+    depends_on:
+      - api
+    ports:
+      - "8501:8501"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - mynetwork
+
+volumes:
+  pgdata:
+
+networks:
+  mynetwork:
