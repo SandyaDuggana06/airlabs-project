@@ -4,3 +4,5 @@ sqlalchemy==2.0.38
 psycopg2-binary==2.9.9
 pandas==2.2.3
 requests==2.32.4
+python-dotenv>=1.0.0
+typing-extensions>=4.7.1

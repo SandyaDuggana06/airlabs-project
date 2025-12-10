@@ -5,46 +5,36 @@ import requests
 import subprocess
 import time
 import docker
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine,inspect
+from sqlalchemy.exc import SQLAlchemyError
+import logging
+import plotly.express as px
+from dotenv import load_dotenv
+import os
 # -----------------------------
 # Streamlit page setup
 # -----------------------------
 st.set_page_config(page_title="✈️ Flight Tracker Map", layout="wide")
 st.title("✈️ Flight Tracker Map")
 st.subheader("API docs available at: http://127.0.0.1:8000/docs")
-st.text("For refreshed data, please click the button below.")
+st.text("For refreshing data in DB, please click the button below.")
 
-# -----------------------------
-# API settings
-# -----------------------------
-API_URL = "http://api:8000/flights"  # Use Docker service name, not localhost
-API_CONTAINER = "my_api"             # Container name in docker-compose
-DOCKER_SOCKET = "/var/run/docker.sock"  # Mounted docker socket
-
-# -----------------------------
-# Function: Restart API container
-# -----------------------------
-def restart_api():
-    client = docker.DockerClient(base_url="unix://var/run/docker.sock")
-    container = client.containers.get(API_CONTAINER)
-    container.restart()
-    st.success("API restarted successfully 🚀")
-    time.sleep(3)  # wait for container to be ready
-
-# -----------------------------
-# Restart API Button
-# -----------------------------
-st.subheader("API Controls")
-if st.button("🔄 Restart API"):
+if st.button("🔄 Refresh Flight Data"):
     try:
-        restart_api()
+        response = requests.post(f"http://api:8000/refresh", timeout=5)
+
+        if response.status_code == 200:
+            st.success("✅ Refresh started successfully!")
+        else:
+            st.error(f"❌ Refresh failed: {response.text}")
+
     except Exception as e:
-        st.error(f"Failed to restart API: {e}")
+        st.error(f"Error calling refresh API: {e}")
+
 # -----------------------------
 # Fetch flight data with error handling
 # -----------------------------
 API_URL = "http://api:8000/flights"
-
 try:
     response = requests.get(API_URL, timeout=10)
     response.raise_for_status()
@@ -120,8 +110,121 @@ try:
         layers=[icon_layer],
         initial_view_state=view_state,
         tooltip=tooltip,
-        map_style="mapbox://styles/mapbox/satellite-v9"
+        map_style="light"
     )
     st.pydeck_chart(r)
 except Exception as e:
     st.error(f"Error displaying map: {e}")
+
+
+
+
+# -----------------------------
+# 2) Database setup
+# -----------------------------
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
+try:
+    engine = create_engine(DATABASE_URL)
+    inspector = inspect(engine)
+    logging.info("Database connection successful.")
+except SQLAlchemyError as e:
+    logging.error(f"Database connection failed: {e}")
+    raise SystemExit(e)
+
+
+# --- Run the SQL query ---
+query = """
+SELECT
+    arrival_airport_name,
+    COUNT(*) AS total_flights
+FROM "realTimeFlightsDataGold"
+GROUP BY arrival_airport_name
+ORDER BY total_flights DESC
+LIMIT 10;
+"""
+
+df = pd.read_sql(query, engine)
+
+# --- Show data table ---
+st.write("Top 10 Arrival Airports by Flight Count", df)
+
+# --- Plot bar chart ---
+st.bar_chart(data=df.set_index("arrival_airport_name")["total_flights"])
+
+
+# --- Run the SQL query ---
+query = """SELECT COUNT(*) AS total_flights,departure_airport_name FROM "realTimeFlightsDataGold" GROUP BY departure_airport_name ORDER BY total_flights DESC LIMIT 10;
+"""
+
+df = pd.read_sql(query, engine)
+
+# --- Show data table ---
+st.write("Top 10 Departure Airports by Flight Count", df)
+
+# --- Plot bar chart ---
+st.bar_chart(data=df.set_index("departure_airport_name")["total_flights"])
+
+
+
+st.title("Number of Flights per Airline")
+
+# --- SQL query ---
+query = """
+SELECT 
+    COUNT(*) AS total_flights,
+    airline_name
+FROM "realTimeFlightsDataGold"
+GROUP BY airline_name
+ORDER BY total_flights DESC
+LIMIT 10;
+"""
+
+df = pd.read_sql(query, engine)
+
+# --- Show table ---
+st.write(df)
+
+# --- Line chart using Plotly ---
+fig = px.line(
+    df,
+    x='airline_name',
+    y='total_flights',
+    color='airline_name',
+    markers=True,
+    title='Flights per Airline'
+)
+
+st.plotly_chart(fig)
+
+st.title("Flight Status Distribution")
+
+# --- Query flight status counts ---
+query = """
+SELECT flight_status, COUNT(*) AS total_flights
+FROM "realTimeFlightsDataGold"
+GROUP BY flight_status
+ORDER BY total_flights DESC;
+"""
+
+df_status = pd.read_sql(query, engine)
+
+# --- Show table ---
+st.write("Flight Status Counts", df_status)
+
+# --- Plot pie chart using Plotly ---
+fig = px.pie(
+    df_status,
+    names='flight_status',
+    values='total_flights',
+    color='flight_status',
+    color_discrete_map={
+        'en-route': 'skyblue',
+        'departed': 'orange',
+        'landed': 'green',
+    },
+    title='Flight Status Distribution'
+)
+
+st.plotly_chart(fig)
+
