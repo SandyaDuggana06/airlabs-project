@@ -1,2 +1,2 @@
-# Run refreshtask.py every day at 10AM
-0 10 * * * root python3 /refreshtask.py >> /home/ubuntu/airlabs-project/cronjob/cron.log 2>&1
+# Run refreshtask.py every 5 minutes
+0 10 * * * /usr/local/bin/python3 /app/refreshtask.py >> /var/log/cron.log 2>&1

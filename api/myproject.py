@@ -7,6 +7,7 @@ from typing import Literal
 import logging
 import os
 from dotenv import load_dotenv
+import time
 
 # -----------------------------
 # 1) Logging setup
@@ -169,7 +170,9 @@ async def refresh(background_tasks: BackgroundTasks):
     """
     background_tasks.add_task(datafetch)
     return {"status": "Refresh started"}
-
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 # ===============================================================
 # ROUTES
 # ===============================================================

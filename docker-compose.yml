@@ -2,7 +2,12 @@ services:
   db:
     image: postgres:15
     container_name: airlabs_db
-    restart: always
+    healthcheck: 
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
     env_file:
       - ./.env
     ports:
@@ -15,20 +20,27 @@ services:
   api:
     build: ./api
     container_name: my_api
-    restart: always
+    restart: unless-stopped
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     ports:
       - "8000:8000"
     networks:
       - mynetwork
+    healthcheck: 
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
 
   streamlit:
     build: ./streamlit
     container_name: my_streamlit
-    restart: always
+    restart: unless-stopped
     depends_on:
       - api
       - db
@@ -36,8 +48,6 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     ports:
       - "8501:8501"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - mynetwork
   cron:
@@ -45,8 +55,9 @@ services:
       context: ./cronjob
     container_name: cron
     depends_on:
-      - api
-    restart: always
+      api: 
+        condition: service_healthy
+    restart: unless-stopped
     networks:
       - mynetwork
 

@@ -11,6 +11,7 @@ import logging
 import plotly.express as px
 from dotenv import load_dotenv
 import os
+import time
 # -----------------------------
 # Streamlit page setup
 # -----------------------------
